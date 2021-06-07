@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 dotenv.config();
@@ -13,6 +14,7 @@ mongoose.connect(process.env.MONGODB, {
     .catch(error => console.log(error))
 
 app.use(cors())
+app.use(expressValidator());
 app.use(express.json());
 
 // get

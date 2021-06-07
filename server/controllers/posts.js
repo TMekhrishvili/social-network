@@ -13,17 +13,9 @@ const getposts = (req, res) => {
 
 const createPost = (req, res) => {
     const post = new Posts(req.body);
-    post.save((error, result) => {
-        if (error) {
-            return res.status(400).json({
-                error
-            })
-        }
-        res.status(200).json({
-            result
-        })
-    })
-    console.log('Created post: ', req.body);
+    post.save().then(result => {
+        res.status(200).json({ result });
+    });
 }
 
 module.exports = {
