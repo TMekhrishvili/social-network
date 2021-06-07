@@ -19,7 +19,7 @@ app.use(express.json());
 
 // get
 const getRoute = require('./routes/posts');
-app.use('/', getRoute);
+app.use('/posts', getRoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

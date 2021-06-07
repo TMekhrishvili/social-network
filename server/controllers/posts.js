@@ -11,9 +11,10 @@ const getPosts = (req, res) => {
 
 const createPost = (req, res) => {
     const post = new Posts(req.body);
-    post.save().then(result => {
-        res.json({ result });
-    });
+    post.save()
+        .then(result => {
+            res.json({ result });
+        });
 }
 
 module.exports = {

@@ -1,4 +1,5 @@
-exports.createPostValidator = (req, res, next) => {
+const createPostValidator = (req, res, next) => {
+    
     // title
     req.check('title', 'Title is required').notEmpty();
     req.check('title', 'Title must be between 4 to 150 characters').isLength({
@@ -18,4 +19,8 @@ exports.createPostValidator = (req, res, next) => {
         return res.status(400).json({ error });
     }
     next();
+}
+
+module.exports = {
+    createPostValidator
 }
