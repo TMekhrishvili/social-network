@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const Users = require('../models/users');
 
 const signup = async (req, res) => {
@@ -14,4 +15,20 @@ const signup = async (req, res) => {
     });
 }
 
-module.exports = { signup }
+const signin = (req, res) => {
+    const { email, password } = req.body;
+    Users.findOne({ email }, (error, user) => {
+        if (error || !user) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        if (!user.authenticate(password)) {
+            return res.status(401).json({ message: 'Password is incorrect.' });
+        }
+    })
+}
+
+module.exports = {
+    signup,
+    signin
+}

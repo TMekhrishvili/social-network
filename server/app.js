@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 
 // env
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 // database
 const mongoose = require('mongoose');
@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGODB, {
 
 // middlewares
 app.use(cors())
+app.use(cookieParser())
 app.use(expressValidator());
 app.use(express.json());
 
