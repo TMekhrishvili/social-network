@@ -1,24 +1,52 @@
 const mongoose = require('mongoose');
+const { v1 } = require('uuid');
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
-    firstname: {
+    username: {
         type: String,
-        required: 'Title is required',
+        trim: true,
+        required: true,
     },
-    lastname: {
+    email: {
         type: String,
-        required: 'Body is required',
+        required: true,
     },
-    age: {
-        type: Number,
-    },
-    address: {
+    hashed_password: {
         type: String,
+        required: true,
     },
-    genderid: {
-        type: Number,
-        required: 'Body is required',
-    }
+    salt: String,
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    updated: Date,
 })
+
+userSchema
+    .virtual('password')
+    .set(function (password) {
+        this._password = password;
+        this.salt = v1();
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(function () {
+        return this._password;
+    })
+
+userSchema.methods = {
+    encryptPassword: function (password) {
+        if (!password) return '';
+        try {
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex');
+        } catch (error) {
+            return '';
+        }
+    }
+}
 
 module.exports = mongoose.model("users", userSchema)

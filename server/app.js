@@ -22,10 +22,13 @@ app.use(expressValidator());
 app.use(express.json());
 
 // routes
+const signup = require('./routes/auth');
 const postsRoute = require('./routes/posts');
 const usersRoute = require('./routes/users');
-app.use('/posts', postsRoute);
+
+app.use('/', signup);
 app.use('/users', usersRoute);
+app.use('/posts', postsRoute);
 
 // server
 const PORT = process.env.PORT || 3001;
