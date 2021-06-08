@@ -9,12 +9,10 @@ const getPosts = (req, res) => {
         .catch(error => console.log(error));
 }
 
-const createPost = (req, res) => {
+const createPost = async (req, res) => {
     const post = new Posts(req.body);
-    post.save()
-        .then(result => {
-            res.json({ result });
-        });
+    await post.save();
+    res.json({ post });
 }
 
 module.exports = {
