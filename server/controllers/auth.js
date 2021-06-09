@@ -10,7 +10,6 @@ const signup = async (req, res) => {
     const user = new Users(req.body);
     await user.save();
     res.json({
-        message: "success",
         user_id: user._id
     });
 }
